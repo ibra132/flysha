@@ -1,5 +1,4 @@
-import { Flight } from "@/generated/prisma";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 
 import {
   Accordion,
@@ -7,20 +6,62 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { mappingSeats, rupiahFormat } from "@/lib/utils";
+import { FlightColumn } from "./columns-flight";
 
 interface ColumnSeatPriceFlightProps {
-  flight: Flight;
+  flight: FlightColumn;
 }
 
 const ColumnSeatPriceFlight: FC<ColumnSeatPriceFlightProps> = ({ flight }) => {
-  console.log(flight);
+  const { business, economy, first, totalBusiness, totalEconomy, totalFirst } =
+    useMemo(() => mappingSeats(flight.seats), [flight]);
 
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="multiple">
       <AccordionItem value="item-1">
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
+        <AccordionTrigger>Economy</AccordionTrigger>
         <AccordionContent>
-          Yes. It adheres to the WAI-ARIA design pattern.
+          <div className="space-y-2">
+            <div className="font-medium">
+              <span className="text-primary">Harga Ticket: </span>
+              {rupiahFormat(flight.price)}
+            </div>
+            <div className="font-medium">
+              <span className="text-primary">Sisa Ticket: </span>
+              {economy}/{totalEconomy}
+            </div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Business</AccordionTrigger>
+        <AccordionContent>
+          <div className="space-y-2">
+            <div className="font-medium">
+              <span className="text-primary">Harga Ticket: </span>
+              {rupiahFormat(flight.price + 500000)}
+            </div>
+            <div className="font-medium">
+              <span className="text-primary">Sisa Ticket: </span>
+              {business}/{totalBusiness}
+            </div>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
+        <AccordionTrigger>First</AccordionTrigger>
+        <AccordionContent>
+          <div className="space-y-2">
+            <div className="font-medium">
+              <span className="text-primary">Harga Ticket: </span>
+              {rupiahFormat(flight.price + 750000)}
+            </div>
+            <div className="font-medium">
+              <span className="text-primary">Sisa Ticket: </span>
+              {first}/{totalFirst}
+            </div>
+          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

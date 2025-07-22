@@ -9,7 +9,7 @@ interface ColumnRouteFlightProps {
 
 const ColumnRouteFlight: FC<ColumnRouteFlightProps> = ({ flight }) => {
   return (
-    <div className="flex gap-5 items-center">
+    <div className="flex gap-5  items-center">
       <div className="text-center">
         <div className="font-bold">{flight.departureCityCode}</div>
         <div className="font-medium">{flight.departureCity}</div>
