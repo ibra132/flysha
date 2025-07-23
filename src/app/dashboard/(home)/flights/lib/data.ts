@@ -16,3 +16,18 @@ export async function getFlights() {
     return [];
   }
 }
+
+export async function getFlightById(id: string) {
+  try {
+    const data = await prisma.flight.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

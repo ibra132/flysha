@@ -12,12 +12,15 @@ import { Input } from "@/components/ui/input";
 
 import React, { useActionState } from "react";
 import SubmitFormButton from "../../components/submit-form-button";
-import { Airplane } from "@/generated/prisma";
-import { saveFlight } from "../lib/action";
+import { Airplane, Flight } from "@/generated/prisma";
+import { saveFlight, updateFlight } from "../lib/action";
 import { ActionResult } from "@/app/dashboard/(auth)/signin/form/actions";
+import { dateFormat } from "@/lib/utils";
 
 export interface FormFlightProps {
   airplanes: Airplane[];
+  type?: "ADD" | "EDIT";
+  defaultValues?: Flight | null;
 }
 
 const initialFormState: ActionResult = {
@@ -25,8 +28,19 @@ const initialFormState: ActionResult = {
   errorDesc: [],
 };
 
-export default function FormFlight({ airplanes }: FormFlightProps) {
-  const [state, formAction] = useActionState(saveFlight, initialFormState);
+export default function FormFlight({
+  airplanes,
+  type,
+  defaultValues,
+}: FormFlightProps) {
+  const updateFlightWithId = (_state: ActionResult, formData: FormData) => {
+    return updateFlight(defaultValues?.id as string, formData);
+  };
+
+  const [state, formAction] = useActionState(
+    type === "ADD" ? saveFlight : updateFlightWithId,
+    initialFormState
+  );
 
   return (
     <form action={formAction} className="space-y-6">
@@ -45,7 +59,7 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="planeId">Pilih Pesawat</Label>
-          <Select name="planeId">
+          <Select name="planeId" defaultValue={defaultValues?.planeId}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Pilih Pesawat" />
             </SelectTrigger>
@@ -67,6 +81,7 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             type="number"
             min={0}
             placeholder="Harga Ticket..."
+            defaultValue={defaultValues?.price}
             required
           />
           <span className="text-sm text-gray-900">
@@ -83,6 +98,7 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             id="departureCity"
             name="departureCity"
             placeholder="Kota Keberangkatan..."
+            defaultValue={defaultValues?.departureCity}
             required
           />
         </div>
@@ -94,6 +110,10 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             id="departureDate"
             name="departureDate"
             placeholder="Tanggal Keberangkatan..."
+            defaultValue={dateFormat(
+              defaultValues?.departureDate as Date,
+              "YYYY-MM-DDTHH:mm"
+            )}
             required
           />
         </div>
@@ -103,6 +123,7 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             id="departureCityCode"
             name="departureCityCode"
             placeholder="Kode Kota..."
+            defaultValue={defaultValues?.departureCityCode}
             required
           />
         </div>
@@ -115,6 +136,7 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             id="destinationCity"
             name="destinationCity"
             placeholder="Kota Tujuan..."
+            defaultValue={defaultValues?.destinationCity}
             required
           />
         </div>
@@ -126,6 +148,10 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             id="arrivalDate"
             name="arrivalDate"
             placeholder="Tanggal Tiba..."
+            defaultValue={dateFormat(
+              defaultValues?.arrivalDate as Date,
+              "YYYY-MM-DDTHH:mm"
+            )}
             required
           />
         </div>
@@ -135,6 +161,7 @@ export default function FormFlight({ airplanes }: FormFlightProps) {
             id="destinationCityCode"
             name="destinationCityCode"
             placeholder="Kode Kota..."
+            defaultValue={defaultValues?.destinationCityCode}
             required
           />
         </div>

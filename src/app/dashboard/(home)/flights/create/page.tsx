@@ -11,7 +11,7 @@ const CreateFlightPage: FC = async () => {
         <div className="font-bold text-2xl">Tambah Data Flight</div>
       </div>
 
-      <FormFlight airplanes={data} />
+      <FormFlight airplanes={data} type="ADD" />
     </div>
   );
 };
