@@ -3,13 +3,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Airplane, Flight, FlightSeat } from "@/generated/prisma";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Pencil } from "lucide-react";
-import DeleteAirplane from "../../airplanes/components/delete-airplane";
-import Image from "next/image";
 import { getFileUrl } from "@/lib/supabase";
+import { Pencil } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 import ColumnRouteFlight from "./coulmn-route-flight";
 import ColumnSeatPriceFlight from "./column-seatprice-flight";
+import DeleteFlight from "./delete-flight";
 
 export type FlightColumn = Flight & {
   plane: Airplane;
@@ -71,7 +71,7 @@ export const columns: ColumnDef<FlightColumn>[] = [
               Edit
             </Link>
           </Button>
-          <DeleteAirplane id={flight.id} />
+          <DeleteFlight id={flight.id} />
         </div>
       );
     },

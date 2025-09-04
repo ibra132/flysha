@@ -28,7 +28,7 @@ export default async function DashboardLayout({
   return (
     <section>
       {/* Navbar */}
-      <nav className="border-b border-muted p-5 ">
+      <nav className="border-b border-muted p-5">
         <div className="flex items-center justify-between">
           <span className="font-bold text-primary">FlySha Dashboard</span>
         </div>

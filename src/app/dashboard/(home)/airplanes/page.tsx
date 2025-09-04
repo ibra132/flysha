@@ -3,9 +3,14 @@ import { DataTable } from "@/components/ui/data-table";
 import { Plus } from "lucide-react";
 import { columns } from "./components/columns-airplane";
 import { getAirplanes } from "./lib/data";
+import { Metadata } from "next";
 
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Dashboard | Airplanes",
+};
 
 export default async function AirplanePage() {
   const planes = await getAirplanes();
