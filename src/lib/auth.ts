@@ -26,7 +26,9 @@ export const lucia = new Lucia(adapter, {
 });
 
 export const getUser = cache(
-  async (): Promise<{ user: User | null; session: Session | null }> => {
+  async (): Promise<
+    { user: User; session: Session } | { user: null; session: null }
+  > => {
     const sessionId =
       (await cookies()).get(lucia.sessionCookieName)?.value ?? null;
 
