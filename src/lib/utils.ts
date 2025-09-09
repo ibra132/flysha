@@ -1,8 +1,34 @@
-import { FlightSeat, TypeSeat } from "@/generated/prisma";
+import { Airplane, Flight, FlightSeat, TypeSeat } from "@/generated/prisma";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import dayjs from "dayjs";
+
+export type Checkout = {
+  id?: string;
+  seat?: TypeSeat;
+  flightDetail?: Flight & { plane: Airplane };
+  seatDetail?: FlightSeat;
+};
+
+export const CHECKOUT_KEY = "CHECKOUT_KEY";
+
+export const SEAT_VALUES = {
+  ECONOMY: {
+    label: "Economy",
+    additionalPrice: 0,
+  },
+  BUSINESS: {
+    label: "Business",
+    additionalPrice: 500000,
+  },
+  FIRST: {
+    label: "First",
+    additionalPrice: 750000,
+  },
+};
+
+export type SeatValuesType = keyof typeof SEAT_VALUES;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,6 +49,21 @@ export const rupiahFormat = (number: number) => {
     style: "currency",
     currency: "IDR",
   }).format(number);
+};
+
+export const objectToParams = (obj: { [key: string]: unknown }) => {
+  const queryParams = Object.keys(obj)
+    .map((key) => {
+      if (obj[key] !== null) {
+        return `${key}=${obj[key]}`;
+      }
+
+      return "";
+    })
+    .filter((key) => key !== "")
+    .join("&");
+
+  return queryParams;
 };
 
 export const mappingSeats = (seats: FlightSeat[]) => {

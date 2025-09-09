@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CompanyLogos from "../components/company-logos";
 import Navbar from "../components/navbar";
+import { searchFlight } from "./lib/actions";
 
 export default async function HomePage() {
   const filter = await getCityFilter();
@@ -30,7 +31,7 @@ export default async function HomePage() {
               </p>
             </div>
             <form
-              action=""
+              action={searchFlight}
               className="bg-white text-flysha-black w-full flex justify-between items-center rounded-[20px] p-5"
             >
               <div className="flex gap-[50px] items-center p-5">

@@ -1,9 +1,10 @@
 import Navbar from "@/app/components/navbar";
-import React from "react";
+import React, { Suspense } from "react";
 import FilterClass from "./components/filter-class";
 import FilterAirline from "./components/filter-airline";
 import FilterFlight from "./components/filter-flight";
 import ListFlights from "./components/list-flights";
+import LoadingFilterAirline from "./components/loading-filter-airline";
 
 export default function AvailableFlightsPage() {
   return (
@@ -28,13 +29,15 @@ export default function AvailableFlightsPage() {
 
       <section
         id="Content"
-        className="container max-w-[1130px] mx-auto -mt-[33px] z-10 relative pb-[105px]"
+        className="container max-w-[1130px] mx-auto -mt-[33px] z-10 relative pb-[105px"
       >
         <div className="flex w-full">
           <form className="ticket-filter flex flex-col shrink-0 w-[230px] gap-[30px] text-flysha-off-purple">
             <FilterClass />
             <FilterFlight />
-            <FilterAirline />
+            <Suspense fallback={<LoadingFilterAirline />}>
+              <FilterAirline />
+            </Suspense>
           </form>
           <ListFlights />
         </div>
