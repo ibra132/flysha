@@ -20,7 +20,7 @@ export const lucia = new Lucia(adapter, {
       name: attributes.name,
       email: attributes.email,
       role: attributes.role,
-      password: attributes.password,
+      passport: attributes.passport,
     };
   },
 });
@@ -72,7 +72,7 @@ declare module "lucia" {
       name: string;
       email: string;
       role: RoleUser;
-      password: string | null;
+      passport: string | null;
     };
   }
 }

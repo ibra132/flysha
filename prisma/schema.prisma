@@ -85,7 +85,7 @@ model FlightSeat {
 
 model Ticket {
   id            String       @id @default(cuid())
-  code          Int          @unique
+  code          String       @unique
   flightId      String
   flight        Flight       @relation(fields: [flightId], references: [id])
   customerId    String
